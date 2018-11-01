@@ -1,4 +1,4 @@
-# Distributed Deep Learning doc
+# DDL doc
 DDL is a platform that trains tensorflow models with GPUs provided by other people
 
 ## Installation
@@ -8,32 +8,39 @@ pip install ddlcli
 ```
 you may also install a specific version:
 ```
-pip install ddlcli==0.0.3
+pip install ddlcli==0.0.5
 ```
 
 ## Prepare your TF model
 
 Create a ```main.py``` file at root of your project  
 
-```main.py``` is the entry point when the training task is started. Place it at the root of the project
+```main.py``` is the entry point when the training task is started. Place it at the root of the project  
+```requirements.txt``` contains all the python package that your code depends on  
 ```
 /example_pkg
     /example_lib
         /example.py
     /main.py
     /requirements.txt
+/dataset
+    /my_data.tfrecord
 ```
-> ```main.py``` is required to implement a main function  
-```requirements.txt``` contains all the python package that your code depends on  
-for example:
+> ```main.py``` is required to implement a main function that takes two parameters as input  
+for example:  
+
 ```
 from example_lib import train
 def main(dataset_dir, model_output_dir)
-    train(dataset_dir, model_output_dir)
-```
-> where the ```train(dataset_dir, model_output_dir)``` invokes the training job that you submit  
-```dateset_dir``` is the location where your model can access all the dateset  
-```model_output_dir``` is the location where your model should output all the training results. Otherwise you will not be able to access the training results  
+    your_train_fn(dataset_dir, model_output_dir)
+```  
+
+> where the ```your_train_fn(dataset_dir, model_output_dir)``` invokes the training job that you submit  
+
+> ```dateset_dir``` is the location where your model can access all the dateset  
+ If you specified ```<your_path>/dataset>/``` in the training yaml, you could expect ```os.path.join(dateset_dir, 'my_data.tfrecord')``` exists at the training time  
+
+> ```model_output_dir``` is the location where your model should output all the training results. Otherwise, you will not be able to download the training outputs  
 
 ## Submit your training task  
  
@@ -58,10 +65,10 @@ Sample yaml file looks like the following:
 email: <your_email_address>
 password: <password>
 job_data:
-  model_location: <your_path>/example_pkg
+  model_location: <your_path>/example_pkg/
   requirement_location: <your_path>/requirements.txt
   dataset:
-    dataset_location: <your_path>/dataset
+    dataset_location: <your_path>/dataset>/
   worker_required: 1
 ```
 > dataset directory hierarchy will be maintained, so that ```dataset_dir``` parameter in the main function of ```main.py``` is equivalent to ```<your_path>/dataset``` specified in the yaml to your training task  
