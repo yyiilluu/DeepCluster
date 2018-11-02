@@ -96,7 +96,8 @@ job_type: tensorflow
 congratulations! Now you have successfully submit a training task with DDL, and just wait for the artifact to be produced
 
 ## Check task progress and download artifact
->TODO: prgress api is not available now
+>TODO: prgress api is not available now  
+
 ```
 ddlcli progress --job_uuid=<uuid> --task_config=<path to your config yaml>
 ```
