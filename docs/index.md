@@ -13,20 +13,26 @@ pip install ddlcli==0.0.5
 
 ## Prepare your TF model
 
-Create a ```main.py``` file at root of your project  
+To submit a training job, you need to follow a general project structure.
 
-```main.py``` is the entry point when the training task is started. Place it at the root of the project  
-```requirements.txt``` contains all the python package that your code depends on  
+[Required] ```main.py``` is the entry point when the training task is started. Place it at the root of the project  
+[Optional] ```requirements.txt``` contains all the python package that your code depends on  
+[Optional] ```config.yaml``` contains all the configrations that you can read from  
 ```
-/example_pkg
-    /example_lib
+/example_project
+    /example_objects
         /example.py
     /main.py
     /requirements.txt
+    /config.yaml
+
 /dataset
     /my_data.tfrecord
 ```
-> ```main.py``` is required to implement a main function that takes two parameters as input  
+> PYTHON_PATH will be set at ./example_project, so please make sure it is the same when test locally  
+Also relative location inside /example_project will be same when running the job
+
+```main.py``` is required to implement a main function that takes two parameters as input  
 for example:  
 
 ```
@@ -35,15 +41,20 @@ def main(dataset_dir, model_output_dir)
     your_train_fn(dataset_dir, model_output_dir)
 ```  
 
-> where the ```your_train_fn(dataset_dir, model_output_dir)``` invokes the training job that you submit  
+where the ```your_train_fn(dataset_dir, model_output_dir)``` invokes the training job that you submit  
 
-> ```dateset_dir``` is the location where your model can access all the dateset  
- If you specified ```<your_path>/dataset>/``` in the training yaml, you could expect ```os.path.join(dateset_dir, 'my_data.tfrecord')``` exists at the training time  
+```dateset_dir``` parameter is the location where your model can access all the dateset  
+ In your code, please retrieve your dataset using something like ```os.path.join(dateset_dir, 'my_data.tfrecord')``` 
 
-> ```model_output_dir``` is the location where your model should output all the training results. Otherwise, you will not be able to download the training outputs  
+```model_output_dir``` parameter is the location where your model should output all the training results. Otherwise, you will not be able to download the training outputs.  
+
+> Implement the main function is sufficient. Don't need to invoke it in your code
 
 ## Submit your training task  
- 
+**Before you start**  
+1. Make sure your project is within a git repository.
+2. Navigate to your project, such as ```cd ./example_project``` and then start ddlcli
+
 **Step 1:** Register to ddl, If this is your first time  
 ```
 ddlcli register
@@ -55,28 +66,42 @@ Please enter your email address: <your_email_address>
 Please enter your password: <password>
 Please re-enter your password: <password>
 Status: 201
-Registered successfully
+Successfully registered
 ```
 
-**Step 2:** Create a training config yaml  
-after register successfully, you can create a config yaml that contains your login information and training specifications.  
+**Step 2:** Login to ddl
+```
+ddlcli login
+```
+you will be asked for email and password to register for the service  
+something like below
+```
+Please enter your email address: <your_email_address>
+Please enter your password: <password>
+Status: 200
+Successfully logged in
+```
+> Once you are logged in, you are able to interact with your account using ddlcli for 10 mins  
+After 10 mins, you might be prompted for login again when running other ddlcli commands
+
+**Step 3:** Create a training task.yaml  
+after register successfully, you can create a ```task.yaml``` that contains your login information and training specifications.  
 Sample yaml file looks like the following:  
 ```
-email: <your_email_address>
-password: <password>
 job_data:
-  model_location: <your_path>/example_pkg/
-  requirement_location: <your_path>/requirements.txt
   dataset:
-    dataset_location: <your_path>/dataset>/
+    dataset_location: <your_path>/dataset/
   worker_required: 1
 ```
-> dataset directory hierarchy will be maintained, so that ```dataset_dir``` parameter in the main function of ```main.py``` is equivalent to ```<your_path>/dataset``` specified in the yaml to your training task  
+> dataset directory hierarchy will be maintained, so that ```dataset_dir``` parameter in the main function of ```main.py``` is equivalent to ```<your_path>/dataset/``` specified in the yaml to your training task  
 
-**Step 3:** Submit your training task  
-Once you have your model prepared and completed registeration, you can submit the training job with
+**Step 4:** Submit your training task  
+Once you have your model prepared and completed registeration, navigate to your project directory, such as ```./example_project``` and run the following command. ddlcli will package current direcories and their sub-directorys up to the latest commit.  
+Make sure you run this command at where you put ```main.py```
+> You will not be able to submit a job if you have any uncommit change in the working diretory  
+ddlcli will not package any parent directory from the location you run the command
 ```
-ddlcli submit --task_config=<path_to_your_config_yaml>
+ddlcli submit --task_config=<path_to_your_task_yaml>
 ```
 you should see something like below if it is successful
 ```
@@ -96,13 +121,12 @@ job_type: tensorflow
 congratulations! Now you have successfully submit a training task with DDL, and just wait for the artifact to be produced
 
 ## Check task progress and download artifact
->TODO: prgress api is not available now  
 
 ```
-ddlcli progress --job_uuid=<uuid> --task_config=<path to your config yaml>
+ddlcli progress --job_uuid=<uuid> --task_config=<path to your task yaml>
 ```
 **Once your task is completed**  
 you can download model outputs with 
 ```
-ddlcli download --job_uuid=<uuid> --dest=<local path where you want model outputs downloaded to> --task_config=<path_to_your_config_yaml>
+ddlcli download --job_uuid=<uuid> --dest=<local path where you want model outputs downloaded to> --task_config=<path_to_your_task_yaml>
 ```
