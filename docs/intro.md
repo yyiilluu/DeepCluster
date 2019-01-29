@@ -3,7 +3,8 @@
 
 It is a fully managed platform allows students and researchers to simply submit their training task to our GPU cluster with only very minimal changes  
 Our GPU cluster is powered by people who would like to share their spare GPU with others  
-Designed specifically for students and researchers who wants to learn deep learning but do not have convenient access to powerful GPU or GPU cluster.
+Designed specifically for students and researchers who wants to do deep learning but do not have convenient access to powerful GPU or GPU cluster.  
+Users can just need to focus on their code instead of execution enviornment.
 
 ![submit task demo](../assets/submit_task_demo.gif)
 

@@ -182,3 +182,6 @@ Once your task is completed, you can download everything output to ```output_dir
 ```
 ddlcli download --job_uuid=<uuid> --dest=<local path where you want model outputs downloaded to>
 ```
+
+## Demo here
+[![Video demo](http://img.youtube.com/vi/w5ezD7UCB6w/0.jpg)](http://www.youtube.com/watch?v=w5ezD7UCB6w&feature=youtu.be)
