@@ -1,7 +1,7 @@
 # Distributed GPU cluster
 ## Easy to use and Cheap GPU cluster for deep learning powered by distributed GPUs
 
-It is a fully managed platform allows students and researchers to simply submit their training task to our GPU cluster with only very minimal changes  
+It is a fully managed platform allows students and researchers to simply submit their training task to our GPU cluster with only very minimal code changes  
 Our GPU cluster is powered by people who would like to share their spare GPU with others  
 Designed specifically for students and researchers who wants to do deep learning but do not have convenient access to powerful GPU or GPU cluster.  
 Users can just focus on their code instead of execution enviornment.
@@ -20,3 +20,5 @@ You can also upload your own dataset and consume it in similar fashion. With one
 
 ## We secure your code but use nonsensitive dataset
 Each training job is preprocessed so that GPU host cannot steal your code, however, data has to be unencrypted at the time of computation due to performance considerations. So, please use public or nonsensitive dataset since GPU host could be curious about what data you are using
+
+## For more details please checkout our [instructions](./index.md) for how to use it

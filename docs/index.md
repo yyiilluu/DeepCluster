@@ -16,7 +16,8 @@ pip install ddlcli==0.0.5
 
 To submit a training job, the easitest way is building from the sample git template repository. ddlcli assumes you are running the commnad at the root of a git repository.
 
-The template repo looks like the following
+You could clone the template repository [here](https://github.com/githublu/DDLTemplate) 
+It looks like the following
 ```
 /DDLTemplate
     /main.py
