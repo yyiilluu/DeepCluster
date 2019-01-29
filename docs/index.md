@@ -1,5 +1,6 @@
 # ddlcli doc
-ddlcli is a command line interface to train deep learning model using GPU cluster.
+ddlcli is a command line interface to train deep learning model using GPU cluster.  
+[Read more about the platform](./intro.md)
 
 ## Installation
 Install latest cli with pip
@@ -26,7 +27,7 @@ The template repo looks like the following
 ```
 > You may rename the repo but make sure you have do **NOT** rename/move ```main.py```
 
-### Step 1: Choose datasets and define configs
+### Step 1: Choose datasets and define configs using ```config.yaml```
 ```config.yaml``` looks like the following. You could choose existing dataset by providing ```dataset_name``` or input the local path to your dataset under ```dataset_path```.
 ```
 dataset:
@@ -36,10 +37,10 @@ dataset:
 
 You can also provide other configs that are specific to your model in there and read this ```config.yaml``` in the main function of ```main.py``` at ```"./configs.yaml"```
 
-### Step 2: List python packages that you may need in requirements.txt
+### Step 2: List python packages that you may need in ```requirements.txt```
 In the case where model requires other python packages from Pypi, you could list all the depended python packages under ```requirements.txt```
 
-### Step 3: Prepare main.py and invoke training
+### Step 3: Prepare ```main.py``` and invoke training
 ```main.py``` is required to implement a main function that takes two parameters as input. It is the entry point of your training code and where you should invoke your functions
 for example:  
 
@@ -158,9 +159,26 @@ No log is found... ## if there is no log yet
 Download log files: ## if there is any console log
 ...
 ```
+
+Alternatively, if you want to output logs into console, you can use -c or --console flag
+```
+ddlcli log --job_uuid=<uuid> -c
+or 
+ddlcli log --job_uuid=<uuid> --console
+```
+
+output will be something like
+
+```
+===========================================
+Query for logs
+===========================================
+No log is found... ## if there is no log yet
+first line of log  ## if there is any log, it will be output to your console directly
+second line of log
+```
+
 Once your task is completed, you can download everything output to ```output_dir``` in your code, such as model artifacts or plots using
 ```
 ddlcli download --job_uuid=<uuid> --dest=<local path where you want model outputs downloaded to>
 ```
-
-<!-- ![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif) -->
