@@ -185,4 +185,4 @@ ddlcli download --job_uuid=<uuid> --dest=<local path where you want model output
 ```
 
 ## Demo here
-[![Video demo](http://img.youtube.com/vi/w5ezD7UCB6w/0.jpg)](http://www.youtube.com/watch?v=w5ezD7UCB6w&feature=youtu.be)
+[![Video demo](http://img.youtube.com/vi/M5DD6QmcdIM/0.jpg)](http://www.youtube.com/watch?v=M5DD6QmcdIM&feature=youtu.be)
