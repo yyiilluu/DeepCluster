@@ -1,23 +1,26 @@
-# ddlcli doc
-ddlcli is a command line interface to train deep learning model using GPU cluster.  
+# DeepCluster.io
+dccli is a command line interface to train deep learning model using GPU cluster.  
 [Read more about the platform](./intro.md)
 
 ## Installation
+---------------
 Install latest cli with pip
 ```
-pip install ddlcli
+pip install dccli
 ```
 you may also install a specific version:
 ```
-pip install ddlcli==0.0.5
+pip install dccli==0.0.5
 ```
 
+<br/>
+
 ## Prepare your workspace and code
+---------------
+To use DeepCluster, your project is required to be a git repository. The easitest way is to start with the [template git repository](https://github.com/githublu/DDLTemplate). ddlcli needs to run at the root of a git repo.  
 
-To submit a training job, the easitest way is building from the sample git template repository. ddlcli assumes you are running the commnad at the root of a git repository.
 
-You could clone the template repository [here](https://github.com/githublu/DDLTemplate) 
-It looks like the following
+ Template repo has the following structure:
 ```
 /DDLTemplate
     /main.py
@@ -26,57 +29,92 @@ It looks like the following
     /README.md
     /.gitignore
 ```
-> You may rename the repo but make sure you have do **NOT** rename/move ```main.py```
+> You may rename the repo but make sure you **DO NOT** rename/move ```main.py```
 
 ### Step 1: Choose datasets and define configs using ```config.yaml```
-```config.yaml``` looks like the following. You could choose existing dataset by providing ```dataset_name``` or input the local path to your dataset under ```dataset_path```.
+```config.yaml``` looks like the following. You could choose existing dataset by providing ```dataset_name```.
 ```
 dataset:
-  dataset_name:
-  dataset_path: eg. ~/dataset/my_data.tfrecords
+  dataset_name: cifar10
 ```
 
-You can also provide other configs that are specific to your model in there and read this ```config.yaml``` in the main function of ```main.py``` at ```"./configs.yaml"```
+You can also provide other configs that are specific to your model here and access ```config.yaml``` in the main function of ```main.py``` at ```"./configs.yaml"```
 
-### Step 2: List python packages that you may need in ```requirements.txt```
-In the case where model requires other python packages from Pypi, you could list all the depended python packages under ```requirements.txt```
+### Step 2: List python packages you need in ```requirements.txt```
+If model requires other python packages from Pypi, you could list them in ```requirements.txt```  
 
-### Step 3: Prepare ```main.py``` and invoke training
-```main.py``` is required to implement a main function that takes two parameters as input. It is the entry point of your training code and where you should invoke your functions
-for example:  
+<br/>
 
+## Develop with DeepCluster and test locally
+---------------
+### Suppose your project looks like the following
+You may start with the [template git repository](https://github.com/githublu/DDLTemplate)
 ```
-from example_lib import your_train_fn
-def main(dataset_dir, output_dir)
-    your_train_fn(dataset_dir, model_output_dir)
+/MyDataset
+    /dataset.json
+
+/MyProject
+    /my_model.py
+    /main.py
+    /requirements.txt
+    /config.yaml
+    /README.md
+    /.gitignore
+```
+
+
+### Step 1: Install packages in the requirements.txt
+> You may want to start with a virtualenv by following [this](https://packaging.python.org/guides/installing-using-pip-and-virtualenv/)   
+
+Navigate to the root of your project
+```
+pip install -r requirements.txt
+```
+
+### Step 2: Download your dataset
+To test locally, locate the dataset on your computer. For this example, suppose you download the dataset to ```/MyDataset/dataset.json```
+
+### Step 3: Invoke your code inside the main function from main.py
+The template repo includes a ```main.py``` which contains a main function which looks like:  
+```
+# import your packages
+
+# do not rename the functions
+def main(dataset_dir, output_dir):
+    config_path = "./config.yaml"
+    
+    # invoke your training function
 ```  
 
-where the ```your_train_fn(dataset_dir, output_dir)``` invokes the training job that you submit  
-
-```dateset_dir``` parameter is the location where your model can access all the dateset  
- In your code, please retrieve your dataset using something like ```os.path.join(dateset_dir, 'my_data.tfrecords')``` 
-
-```output_dir``` parameter is the location where your model should output all the training results or plots to. Otherwise, you will not be able to download the outputs.  
-
-Suppose you have additional configs in ```configs.yaml```, you could access them with something like 
+Modify the main function to invoke your training code.  
+For example:
 ```
-from example_lib import your_train_fn
-def main(dataset_dir, output_dir)
-    import yaml
-    with open('./config.yaml', 'r') as f:
-        configs = yaml.load(f)
+# import your packages
+from my_model import my_train_fn
 
-    your_train_fn(dataset_dir, model_output_dir, configs)
+# do not rename the functions
+def main(dataset_dir, output_dir):
+    config_path = "./config.yaml"
+    
+    # invoke your training function
+    my_train_fn(dataset_dir, output_dir, config_path)
 ```  
 
-> You don't need to invoke the main function in your code. Assume the main function will be invoked after you submit you task
+### Step 4: Run ``main.py``
+```
+python main.py --dataset_dir /MyDataset --output_dir /MyOutput
+```
+> ```--dataset_dir``` expects the directory path where dataset resides, instead of the path to dataset itself  
 
 That is it! You have completed all the required steps.
 
-## Submit your training task  
+ <br />  
+
+## Submit your training job  
+---------------
 **Before you start**  
 1. Make sure your project is within a git repository.
-2. Navigate to your project, such as ```cd ./example_project``` and then start ddlcli
+2. Navigate to the root your project, such as ```cd ./example_project``` and then start ddlcli
 
 **Step 1:** Register to ddl, If this is your first time  
 ```
@@ -102,10 +140,8 @@ Please enter your email address: <your_email_address>
 Please enter your password: <password>
 Successfully logged in
 ```
-> Once you are logged in, you are able to interact with your account using ddlcli for 10 mins  
-After 10 mins, you might be prompted for login again when running other ddlcli commands
 
-**Step 3:** Submit your training task  
+**Step 3:** Submit your training job  
 At the root of your repository, where you have your main.py file
 ```
 ddlcli submit
@@ -113,12 +149,12 @@ ddlcli submit
 you should see something like below if it is successful
 ```
 ===========================================
-Submit task
+Submit Job
 ===========================================
 uploading file ...
 ...
 job_uuid: 99047c5e-380f-4a58-86c0-788517acf3df
-job_type: tensorflow
+job_type: pytorch
 ```
 > Please save your job_uuid somewhere, you will need to use it for tracking progress and download logs/artifacts
 
@@ -129,10 +165,10 @@ or
 ddlcli submit --dirty
 ```
 
-congratulations! Now you have successfully submit a training task with DDL.
+congratulations! Now you have successfully submit a training job with DDL.
 
-## Check task progress and download artifact
-You can check the progress of the training using job_uuid you got when submit the training task
+## Check job progress and download artifact
+You can check the progress of the training using job_uuid you got when submit the training job
 ```
 ddlcli progress --job_uuid=<uuid>
 ```
@@ -143,12 +179,11 @@ Check Job Progress
 ===========================================
 job_uuid: 99047c5e-380f-4a58-86c0-788517acf3df
 job_state: finished
-tensorboard_location: https://192.46.115.25:6006
 ```
 
 To see console logs, you could download it with
 ```
-ddlcli log --job_uuid=<uuid> --dest=<local path console logs will be downloaded to>
+ddlcli log --job_uuid=<uuid>
 ```
 
 You should see something like below
@@ -163,9 +198,7 @@ Download log files: ## if there is any console log
 
 Alternatively, if you want to output logs into console, you can use -c or --console flag
 ```
-ddlcli log --job_uuid=<uuid> -c
-or 
-ddlcli log --job_uuid=<uuid> --console
+ddlcli log --job_uuid=<uuid>
 ```
 
 output will be something like
@@ -179,7 +212,7 @@ first line of log  ## if there is any log, it will be output to your console dir
 second line of log
 ```
 
-Once your task is completed, you can download everything output to ```output_dir``` in your code, such as model artifacts or plots using
+Once your job is completed, you can download everything output to ```output_dir``` in your code, such as model artifacts or plots using
 ```
 ddlcli download --job_uuid=<uuid> --dest=<local path where you want model outputs downloaded to>
 ```
