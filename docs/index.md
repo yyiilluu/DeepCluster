@@ -10,19 +10,19 @@ pip install dccli
 ```
 you may also install a specific version:
 ```
-pip install dccli==0.0.5
+pip install dccli==0.0.3
 ```
 
 <br/>
 
 ## Prepare your workspace and code
 ---------------
-To use DeepCluster, your project is required to be a git repository. The easitest way is to start with the [template git repository](https://github.com/githublu/DDLTemplate). ddlcli needs to run at the root of a git repo.  
+To use DeepCluster, your project is required to be a git repository. The easitest way is to start with the [template git repository](https://github.com/githublu/DeepClusterTemplate). dccli needs to run at the root of a git repo.  
 
 
  Template repo has the following structure:
 ```
-/DDLTemplate
+/DeepClusterTemplate
     /main.py
     /requirements.txt
     /config.yaml
@@ -48,7 +48,7 @@ If model requires other python packages from Pypi, you could list them in ```req
 ## Develop with DeepCluster and test locally
 ---------------
 ### Suppose your project looks like the following
-You may start with the [template git repository](https://github.com/githublu/DDLTemplate)
+You may start with the [template git repository](https://github.com/githublu/DeepClusterTemplate)
 ```
 /MyDataset
     /dataset.json
@@ -114,11 +114,11 @@ That is it! You have completed all the required steps.
 ---------------
 **Before you start**  
 1. Make sure your project is within a git repository.
-2. Navigate to the root your project, such as ```cd ./example_project``` and then start ddlcli
+2. Navigate to the root your project, such as ```cd ./example_project``` and then start dccli
 
-**Step 1:** Register to ddl, If this is your first time  
+**Step 1:** Register to DeepCluster, If this is your first time  
 ```
-ddlcli register
+dccli register
 ```
 you will be asked for email and password to register for the service  
 something like below
@@ -129,9 +129,9 @@ Please re-enter your password: <password>
 Successfully registered
 ```
 
-**Step 2:** Login to ddl
+**Step 2:** Login to DeepCluster
 ```
-ddlcli login
+dccli login
 ```
 you will be asked for email and password to register for the service  
 something like below
@@ -144,7 +144,7 @@ Successfully logged in
 **Step 3:** Submit your training job  
 At the root of your repository, where you have your main.py file
 ```
-ddlcli submit
+dccli submit
 ```
 you should see something like below if it is successful
 ```
@@ -158,19 +158,12 @@ job_type: pytorch
 ```
 > Please save your job_uuid somewhere, you will need to use it for tracking progress and download logs/artifacts
 
-If you have uncommitted change in your repo and you want to include everything in your current working directory without a new commit, please use
-```
-ddlcli submit -d
-or 
-ddlcli submit --dirty
-```
-
-congratulations! Now you have successfully submit a training job with DDL.
+congratulations! Now you have successfully submit a training job with DeepCluster.
 
 ## Check job progress and download artifact
 You can check the progress of the training using job_uuid you got when submit the training job
 ```
-ddlcli progress --job_uuid=<uuid>
+dccli progress --job_uuid=<uuid>
 ```
 You will see something like this if it is successful
 ```
@@ -181,24 +174,9 @@ job_uuid: 99047c5e-380f-4a58-86c0-788517acf3df
 job_state: finished
 ```
 
-To see console logs, you could download it with
+To stream console logs, you can use the stream function 
 ```
-ddlcli log --job_uuid=<uuid>
-```
-
-You should see something like below
-```
-===========================================
-Query for logs
-===========================================
-No log is found... ## if there is no log yet
-Download log files: ## if there is any console log
-...
-```
-
-Alternatively, if you want to output logs into console, you can use -c or --console flag
-```
-ddlcli log --job_uuid=<uuid>
+dccli stream --job_uuid=<uuid>
 ```
 
 output will be something like
@@ -214,8 +192,8 @@ second line of log
 
 Once your job is completed, you can download everything output to ```output_dir``` in your code, such as model artifacts or plots using
 ```
-ddlcli download --job_uuid=<uuid> --dest=<local path where you want model outputs downloaded to>
+dccli download --job_uuid=<uuid> --dest=<local path where you want model outputs downloaded to>
 ```
 
 ## Demo here
-[![Video demo](http://img.youtube.com/vi/w5ezD7UCB6w/0.jpg)](http://www.youtube.com/watch?v=w5ezD7UCB6w&feature=youtu.be)
+[![Video demo](http://img.youtube.com/vi/M5DD6QmcdIM/0.jpg)](http://www.youtube.com/watch?v=M5DD6QmcdIM&feature=youtu.be)
