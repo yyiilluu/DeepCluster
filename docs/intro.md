@@ -1,10 +1,10 @@
-# Distributed GPU cluster
-## Easy to use and Cheap GPU cluster for deep learning powered by distributed GPUs
+# DeepCluster
+## Easy to use and Free GPU cluster for deep learning powered by distributed GPUs
 
 It is a fully managed platform allows students and researchers to simply submit their deep learning tasks to our GPU cluster with only very minimal code change  
 Designed specifically for students and researchers who wants to do deep learning but do not have convenient access to powerful GPU or GPU cluster.  
 Our GPU cluster is powered by people who would like to share their spare GPU with others  
-Users can just focus on their code instead of execution enviornment.
+We make training on GPU so easy that users can just focus on their code instead of execution enviornment.
 
 ## Using it is very simple
 We provide a [template repo](https://github.com/githublu/DDLTemplate) for submit your training task.  
