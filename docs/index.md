@@ -10,7 +10,7 @@ pip install dccli
 ```
 you may also install a specific version:
 ```
-pip install dccli==0.0.3
+pip install dccli==0.0.9
 ```
 
 <br/>
@@ -32,10 +32,19 @@ To use DeepCluster, your project is required to be a git repository. The easites
 > You may rename the repo but make sure you **DO NOT** rename/move ```main.py```
 
 ### Step 1: Choose datasets and define configs using ```config.yaml```
-```config.yaml``` looks like the following. You could choose existing dataset by providing ```dataset_name```.
+```config.yaml``` looks like the following. You could choose existing dataset by providing ```dataset_name```,   deeplearning framework type, ```job_type```, and number of worker you want to use ```worker_required```. You can find more detailed instruction about valid value in each field [here](./config.md)
 ```
-dataset:
-  dataset_name: cifar10
+# speficy your job type, such as tensorflow and pytorch
+job_type: <tensorflow|pytorch>
+
+# provide known dataset name or local datasets
+dataset_name: 
+dataset_path:
+
+# number of GPU used to train, default it 1
+worker_required: 1
+
+# other custom configs
 ```
 
 You can also provide other configs that are specific to your model here and access ```config.yaml``` in the main function of ```main.py``` at ```"./configs.yaml"```
@@ -123,22 +132,34 @@ dccli register
 you will be asked for email and password to register for the service  
 something like below
 ```
-Please enter your email address: <your_email_address>
-Please enter your password: <password>
-Please re-enter your password: <password>
-Successfully registered
+===========================================
+         Register with DeepCluster
+===========================================
+Please enter your email address: <your email>
+Password must be 8 - 20 characters and can contain alphanumeric and @#$%^&+=
+Please enter your password: <your password>
+Please re-enter your password: <your password>
+Registered successfully
+Login successfully
 ```
 
+Once you successfully registered with DeepCluster, you are already logged in. Skip to *Step 3: Submit your training job*  
+<br>
 **Step 2:** Login to DeepCluster
+If your log in is expired, log in with the following command
+
 ```
 dccli login
 ```
 you will be asked for email and password to register for the service  
 something like below
 ```
-Please enter your email address: <your_email_address>
-Please enter your password: <password>
-Successfully logged in
+===========================================
+           Login to DeepCluster
+===========================================
+Please enter your email: <your email>
+Please enter your password: <your password>
+Login successfully
 ```
 
 **Step 3:** Submit your training job  
@@ -149,14 +170,16 @@ dccli submit
 you should see something like below if it is successful
 ```
 ===========================================
-Submit Job
+                Submit Job
 ===========================================
-uploading file ...
-...
-job_uuid: 99047c5e-380f-4a58-86c0-788517acf3df
-job_type: pytorch
+Code package includes uncommitted changes
+zip source code...
+Upload code...
+Submit job successfully
+ >  job type: tensorflow
+ >  job uuid: 7040d88f-d02f-4529-84e2-d1991b90afc0
 ```
-> Please save your job_uuid somewhere, you will need to use it for tracking progress and download logs/artifacts
+> job uuid is the identifier to track training progress, stream log and download artifacts
 
 congratulations! Now you have successfully submit a training job with DeepCluster.
 
@@ -168,11 +191,20 @@ dccli progress --job_uuid=<uuid>
 You will see something like this if it is successful
 ```
 ===========================================
-Check Job Progress
+            Check Job Progress
 ===========================================
-job_uuid: 99047c5e-380f-4a58-86c0-788517acf3df
-job_state: finished
+Job 7040d88f-d02f-4529-84e2-d1991b90afc0
+ >  job type:  tensorflow
+ >  job state: waiting for worker to join
+ >  duration:  00:00:58
+ >  job local history:
+        [2019-03-10 12:42:13] pending upload
+        [2019-03-10 12:42:19] job data uploaded
+        [2019-03-10 12:42:20] job is ready
 ```
+
+```job state``` indicate the current status of the job  
+```job local history``` captures the events from the earliest to latest 
 
 To stream console logs, you can use the stream function 
 ```
@@ -185,8 +217,7 @@ output will be something like
 ===========================================
 Query for logs
 ===========================================
-No log is found... ## if there is no log yet
-first line of log  ## if there is any log, it will be output to your console directly
+first line of log  ## if there is any console log of your code
 second line of log
 ```
 
