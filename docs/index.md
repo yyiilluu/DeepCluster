@@ -8,16 +8,11 @@ Install latest cli with pip
 ```
 pip install dccli
 ```
-you may also install a specific version:
-```
-pip install dccli==0.0.9
-```
-
 <br/>
 
 ## Prepare your workspace and code
 ---------------
-To use DeepCluster, your project is required to be a git repository. The easitest way is to start with the [template git repository](https://github.com/githublu/DeepClusterTemplate). dccli needs to run at the root of a git repo.  
+To use DeepCluster, your project is required to be a git repository. The easitest way is to start with the [template git repository](https://github.com/githublu/DeepClusterTemplate). 
 
 
  Template repo has the following structure:
@@ -80,10 +75,7 @@ Navigate to the root of your project
 pip install -r requirements.txt
 ```
 
-### Step 2: Download your dataset
-To test locally, locate the dataset on your computer. For this example, suppose you download the dataset to ```/MyDataset/dataset.json```
-
-### Step 3: Invoke your code inside the main function from main.py
+### Step 2: Invoke your code inside the main function from main.py
 The template repo includes a ```main.py``` which contains a main function which looks like:  
 ```
 # import your packages
@@ -109,13 +101,20 @@ def main(dataset_dir, output_dir):
     my_train_fn(dataset_dir, output_dir, config_path)
 ```  
 
-### Step 4: Run ``main.py``
+### Step 3 Download and locate dataset
+To test locally, download or locate the dataset on your computer. For this example, suppose you download the dataset to ```/MyDataset/dataset.json```  
+
+### Step 4: Test locally by running ```main.py```
+Before submit to DeepCluster, it is strongly recommended to run your code locally .  
+
+Run it locally with the following:
 ```
 python main.py --dataset_dir /MyDataset --output_dir /MyOutput
 ```
 > ```--dataset_dir``` expects the directory path where dataset resides, instead of the path to dataset itself  
 
-That is it! You have completed all the required steps.
+<br />
+That is it! You have completed all the required preparation steps.
 
  <br />  
 
@@ -163,7 +162,8 @@ Login successfully
 ```
 
 **Step 3:** Submit your training job  
-At the root of your repository, where you have your main.py file
+dccli assume it is run at the root of a git repo by default, where you have your main.py file. Or start from the current directory with ```-c``` flag.  
+
 ```
 dccli submit
 ```
@@ -186,8 +186,9 @@ congratulations! Now you have successfully submit a training job with DeepCluste
 ## Check job progress and download artifact
 You can check the progress of the training using job_uuid you got when submit the training job
 ```
-dccli progress --job_uuid=<uuid>
+dccli progress
 ```
+Optionally, you can provide ```--job_uuid <job uuid>``` to comnand line if you have more than one job
 You will see something like this if it is successful
 ```
 ===========================================
@@ -208,7 +209,7 @@ Job 7040d88f-d02f-4529-84e2-d1991b90afc0
 
 To stream console logs, you can use the stream function 
 ```
-dccli stream --job_uuid=<uuid>
+dccli stream
 ```
 
 output will be something like
@@ -223,7 +224,15 @@ second line of log
 
 Once your job is completed, you can download everything output to ```output_dir``` in your code, such as model artifacts or plots using
 ```
-dccli download --job_uuid=<uuid> --dest=<local path where you want model outputs downloaded to>
+dccli download --dest=<local path where you want model outputs downloaded to>
+```
+output will look like below
+
+```
+===========================================
+Download Job Output
+===========================================
+Output downloaded to: <local path where you want model outputs downloaded to>
 ```
 
 ## Demo here
