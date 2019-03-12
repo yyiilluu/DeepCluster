@@ -2,10 +2,10 @@
 
 ## job_type:
 valid job types are:
-job_type      | version      
----------------|---------------
-tensorflow    |1.8.0         
-pytorch       |0.4.1         
+job_type      | version        |
+---------------|---------------|
+tensorflow    |1.8.0           | 
+pytorch       |0.4.1           |
 
 ## dataset_name and data_path:
 You may want to use any pre-cached dataset by specifying ```dataset_name```, or upload your own dataset by adding local path to ```dataset_path```.  
