@@ -3,7 +3,7 @@
 ## job_type:
 valid job types are:
 job_type      | version      
---------|--------
+---------------|---------------
 tensorflow    |1.8.0         
 pytorch       |0.4.1         
 
