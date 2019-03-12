@@ -3,7 +3,7 @@
 ## job_type:
 valid job types are:
 job_type      | version      
-------------- |------------- 
+--------|--------
 tensorflow    |1.8.0         
 pytorch       |0.4.1         
 
@@ -14,9 +14,9 @@ If ```dataset_name``` is provided, ```dataset_path``` will be ignored
 
 valid dataset names are :  
 
-dataset_name    | 
---------------- | ---------------
-cifar10         |
+dataset_name   | 
+---------------|
+cifar10        |
 
 ## worker_required: 
 This indicates the number of GPU worker will be used for training. It is only beneficial if your code support distributed training, such as tensorflow estimator or manually assign devices in your code. Otherwise, there will be just a number of identical results.
