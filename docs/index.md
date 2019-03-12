@@ -27,9 +27,9 @@ To use DeepCluster, your project is required to be a git repository. The easites
 > You may rename the repo but make sure you **DO NOT** rename/move ```main.py```
 
 ### Step 1: Choose datasets and define configs using ```config.yaml```
-```config.yaml``` looks like the following. You could choose existing dataset by providing ```dataset_name```,   deeplearning framework type, ```job_type```, and number of worker you want to use ```worker_required```. You can find more detailed instruction about valid value in each field [here](./config.md)
+```config.yaml``` looks like the following. You can choose our known dataset by providing ```dataset_name```,   deep learning framework type, ```job_type```, and number of worker you want to use ```worker_required```. You can find more detailed information about each field [here](./config.md)
 ```
-# speficy your job type, such as tensorflow and pytorch
+# specify your job type, such as tensorflow and pytorch
 job_type: <tensorflow|pytorch>
 
 # provide known dataset name or local datasets
@@ -45,7 +45,7 @@ worker_required: 1
 You can also provide other configs that are specific to your model here and access ```config.yaml``` in the main function of ```main.py``` at ```"./configs.yaml"```
 
 ### Step 2: List python packages you need in ```requirements.txt```
-If model requires other python packages from Pypi, you could list them in ```requirements.txt```  
+If model requires other python packages from Pypi, you can list them in ```requirements.txt```  
 
 <br/>
 
@@ -105,13 +105,11 @@ def main(dataset_dir, output_dir):
 To test locally, download or locate the dataset on your computer. For this example, suppose you download the dataset to ```/MyDataset/dataset.json```  
 
 ### Step 4: Test locally by running ```main.py```
-Before submit to DeepCluster, it is strongly recommended to run your code locally .  
+Before submit to DeepCluster, it is strongly recommended to run your code locally:  
 
-Run it locally with the following:
 ```
 python main.py --dataset_dir /MyDataset --output_dir /MyOutput
 ```
-> ```--dataset_dir``` expects the directory path where dataset resides, instead of the path to dataset itself  
 
 <br />
 That is it! You have completed all the required preparation steps.
@@ -120,16 +118,13 @@ That is it! You have completed all the required preparation steps.
 
 ## Submit your training job  
 ---------------
-**Before you start**  
-1. Make sure your project is within a git repository.
-2. Navigate to the root your project, such as ```cd ./example_project``` and then start dccli
 
-**Step 1:** Register to DeepCluster, If this is your first time  
+### Step 1: Register to DeepCluster, If this is your first time  
 ```
 dccli register
 ```
-you will be asked for email and password to register for the service  
-something like below
+you will be asked for email and password to register for the service:  
+
 ```
 ===========================================
          Register with DeepCluster
@@ -144,14 +139,14 @@ Login successfully
 
 Once you successfully registered with DeepCluster, you are already logged in. Skip to *Step 3: Submit your training job*  
 <br>
-**Step 2:** Login to DeepCluster
+### Step 2: Login to DeepCluster
 If your log in is expired, log in with the following command
 
 ```
 dccli login
 ```
-you will be asked for email and password to register for the service  
-something like below
+you will be asked for email and password to login to the service:  
+
 ```
 ===========================================
            Login to DeepCluster
@@ -161,8 +156,8 @@ Please enter your password: <your password>
 Login successfully
 ```
 
-**Step 3:** Submit your training job  
-dccli assume it is run at the root of a git repo by default, where you have your main.py file. Or start from the current directory with ```-c``` flag.  
+### Step 3: Submit your training job  
+dccli will package and submit the entire git repository by default. Use ```-c``` flag to submit current directory instead.  
 
 ```
 dccli submit
@@ -181,15 +176,15 @@ Submit job successfully
 ```
 > job uuid is the identifier to track training progress, stream log and download artifacts
 
-congratulations! Now you have successfully submit a training job with DeepCluster.
+congratulations! Now you have successfully submit a training job to DeepCluster.
 
-## Check job progress and download artifact
-You can check the progress of the training using job_uuid you got when submit the training job
+## Manage training jobs
+You can check the progress using:
 ```
 dccli progress
 ```
-Optionally, you can provide ```--job_uuid <job uuid>``` to comnand line if you have more than one job
-You will see something like this if it is successful
+Optionally, you can provide ```--job_uuid <job uuid>``` to comnand line if you have more than one job:
+
 ```
 ===========================================
             Check Job Progress
@@ -207,7 +202,7 @@ Job 7040d88f-d02f-4529-84e2-d1991b90afc0
 ```job state``` indicate the current status of the job  
 ```job local history``` captures the events from the earliest to latest 
 
-To stream console logs, you can use the stream function 
+To stream console logs:
 ```
 dccli stream
 ```
@@ -222,7 +217,7 @@ first line of log  ## if there is any console log of your code
 second line of log
 ```
 
-Once your job is completed, you can download everything output to ```output_dir``` in your code, such as model artifacts or plots using
+Once your job is completed, you can download code outputs, such as model artifacts or plots, to ```output_dir```
 ```
 dccli download --dest=<local path where you want model outputs downloaded to>
 ```
