@@ -1,3 +1,4 @@
+import yaml
 # import your packages
 from model import train_model
 
@@ -10,9 +11,10 @@ def main(dataset_path, output_path):
     :return:
     """
     print("start running training job")
-    config_path = "./config.yaml"
+    with open("./config.yaml", 'r') as f:
+        config = yaml.load(f)
     # invoke your training function
-    train_model(dataset_path, output_path, config_path)
+    train_model(dataset_path, output_path, config)
 
 
 # to test your code locally, you can either run main.py directly

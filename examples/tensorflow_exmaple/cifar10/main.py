@@ -1,6 +1,5 @@
-# import your packages
 import yaml
-
+# import your packages
 import generate_cifar10_tfrecords
 import cifar10_main
 

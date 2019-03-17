@@ -1,12 +1,9 @@
-# import your packages
 import yaml
-
+# import your packages
 import prepro
-
-# do not rename the functions
 import train
 
-
+# do not rename the functions
 def main(dataset_path, output_path):
     """
     main entry point of training function

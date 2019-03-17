@@ -31,7 +31,7 @@ class Net(nn.Module):
     x = self.fc3(x)
     return x
 
-def train_model(dataset_dir, output_dir, config_dir):
+def train_model(dataset_dir, output_dir, config):
   np.random.seed(1)
   random.seed(2)
   torch.manual_seed(3)
