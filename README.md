@@ -10,7 +10,7 @@ pip install dccli
 
 ## Qucik start with mnist example
 ---------------
-under ```/examples```, there are a couple examples that you are try, one of them is tensorflow mnist
+under ```/examples```, there are a couple examples that you can try, one of them is tensorflow mnist
 
 ### Submit mnist with tensorflow example
 Navigate to /examples/tensorflow_example/mnist
@@ -34,6 +34,4 @@ Check out console log
 dccli stream
 ```
 
-Get more detailed instructions from full instructions
-
-## Full instructions is [here](./docs/index.md)
+## Get more details from full instruction [here](./docs/index.md)
