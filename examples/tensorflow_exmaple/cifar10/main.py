@@ -15,8 +15,8 @@ def main(dataset_path, output_path):
     with open("./config.yaml", "r") as f:
         config = yaml.load(f)
     # invoke your training function
-    tf_record_location = generate_cifar10_tfrecords.main(dataset_path, output_path)
-    cifar10_main.main(job_dir=output_path, data_dir=tf_record_location, **config)
+    generate_cifar10_tfrecords.main(dataset_path)
+    cifar10_main.main(job_dir=output_path, data_dir='./', **config)
 
 
 # to test your code locally, you can either run main.py directly

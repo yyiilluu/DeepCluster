@@ -11,9 +11,9 @@ worker_required: 1
 # you can also define your config here
 # config.yaml will be placed next to main.py
 # so you can access your config from code from "./config.yaml"
-train_steps: 1000
-num_gpus: 0
-variable_strategy: CPU
+train_steps: 100
+num_gpus: 1
+variable_strategy: GPU
 use_distortion_for_training: True
 log_device_placement: False
 num_intra_threads: 0

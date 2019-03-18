@@ -1,6 +1,7 @@
 import yaml
 # import your packages
-from model import train_model
+from model import train
+
 
 # do not rename the functions
 def main(dataset_path, output_path):
@@ -10,16 +11,18 @@ def main(dataset_path, output_path):
     :param output_path: path to a directory for outputs
     :return:
     """
-    with open("./config.yaml", 'r') as f:
+    print("start running training job")
+    with open("./config.yaml", "r") as f:
         config = yaml.load(f)
     # invoke your training function
-    train_model(dataset_path, output_path, config)
+    train(dataset_path)
 
 
 # to test your code locally, you can either run main.py directly
 # such as "python main.py --dataset_path=<path> --output_path=<path>"
 if __name__ == '__main__':
     import argparse
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-d',
@@ -33,6 +36,6 @@ if __name__ == '__main__':
         type=str,
         required=True,
         help='Path to a directory for outputs')
-    
+
     FLAGS, _ = parser.parse_known_args()
     main(FLAGS.dataset_path, FLAGS.output_path)
