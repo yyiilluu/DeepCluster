@@ -54,74 +54,6 @@ You can also provide other configs that are specific to your model here and acce
 
 ### Step 2: List python packages you need in ```requirements.txt```
 If model requires other python packages from Pypi, you can list them in ```requirements.txt```  
-
-<br/>
-
-## Develop with DeepCluster and test locally
----------------
-### Suppose your project looks like the following
-You may start with the [template git repository](https://github.com/githublu/DeepClusterTemplate)
-```
-/MyDataset
-    /dataset.json
-
-/MyProject
-    /my_model.py
-    /main.py
-    /requirements.txt
-    /config.yaml
-    /README.md
-    /.gitignore
-```
-
-
-### Step 1: Install packages in the requirements.txt
-> You may want to start with a virtualenv by following [this](https://packaging.python.org/guides/installing-using-pip-and-virtualenv/)   
-
-Navigate to the root of your project
-```
-pip install -r requirements.txt
-```
-
-### Step 2: Invoke your code inside the main function from main.py
-The template repo includes a ```main.py``` which contains a main function which looks like:  
-```
-# import your packages
-
-# do not rename the functions
-def main(dataset_dir, output_dir):
-    config_path = "./config.yaml"
-    
-    # invoke your training function
-```  
-
-Modify the main function to invoke your training code.  
-For example:
-```
-# import your packages
-from my_model import my_train_fn
-
-# do not rename the functions
-def main(dataset_dir, output_dir):
-    config_path = "./config.yaml"
-    
-    # invoke your training function
-    my_train_fn(dataset_dir, output_dir, config_path)
-```  
-
-### Step 3 Download and locate dataset
-To test locally, download or locate the dataset on your computer. For this example, suppose you download the dataset to ```/MyDataset/dataset.json```  
-
-### Step 4: Test locally by running ```main.py```
-Before submit to DeepCluster, it is strongly recommended to run your code locally:  
-
-```
-python main.py --dataset_dir /MyDataset --output_dir /MyOutput
-```
-
-<br />
-That is it! You have completed all the required preparation steps.
-
  <br />  
 
 ## Submit your training job  
@@ -237,6 +169,3 @@ Download Job Output
 ===========================================
 Output downloaded to: <local path where you want model outputs downloaded to>
 ```
-
-## Demo here
-[![Video demo](http://img.youtube.com/vi/M5DD6QmcdIM/0.jpg)](http://www.youtube.com/watch?v=M5DD6QmcdIM&feature=youtu.be)
