@@ -8,6 +8,7 @@ Install latest cli with pip
 ```
 pip install dccli
 ```
+> Warning: dccli<=0.0.11 will no longer work due to updates that are not backward compatible
 <br/>
 
 ## Prepare your workspace and code
@@ -27,10 +28,12 @@ To use DeepCluster, your project is required to be a git repository. The easites
 > You may rename the repo but make sure you **DO NOT** rename/move ```main.py```
 
 ### Step 1: Choose datasets and define configs using ```config.yaml```
-```config.yaml``` looks like the following. You can choose our known dataset by providing ```dataset_name```,   deep learning framework type, ```job_type```, and number of worker you want to use ```worker_required```. You can find more detailed information about each field [here](./config.md)
+```config.yaml``` looks like the following. You can choose our known dataset by providing ```dataset_name```,   deep learning framework type with ```container_name```, number of worker you want to use with ```worker_required```, and the entry command with ```command```.  
+There are two environment variables. $DATASET is the path to dataset and $OUTPUT is the path where you can put output for download.    
+You can find more detailed information about each field [here](./config.md)
 ```
-# specify your job type, such as tensorflow and pytorch
-job_type: <tensorflow|pytorch>
+# speficy your container name, such as deepcluster/tensorflow:1.12-python3.6 or deepcluster/pytorch:1.0-python3.7
+container_image:
 
 # provide known dataset name or local datasets
 dataset_name: 
@@ -38,6 +41,11 @@ dataset_path:
 
 # number of GPU used to train, default it 1
 worker_required: 1
+
+# command to run
+# use the environment variable $DATASET to access dataset
+# and write output to $OUTPUT
+command: 
 
 # other custom configs
 ```

@@ -1,4 +1,4 @@
-# speficy your job type, such as tensorflow and pytorch
+# speficy your container name, such as deepcluster/tensorflow:1.12-python3.6 or deepcluster/pytorch:1.0-python3.7
 container_image: deepcluster/pytorch:1.0-python3.7
 
 # provide known dataset name or local datasets
@@ -9,7 +9,7 @@ dataset_path:
 worker_required: 1
 
 # command to run
-# use the enviornment variable $DATASET to access dataset
+# use the environment variable $DATASET to access dataset
 # and write output to $OUTPUT
 command: python main.py -d $DATASET -o $OUTPUT
 
