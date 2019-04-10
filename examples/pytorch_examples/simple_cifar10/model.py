@@ -97,6 +97,3 @@ def train_model(dataset_dir, output_dir, config):
 
   print('Finished Training')
 
-  _, predicted = torch.max(outputs, 1)
-
-  print('Predicted: ', ' '.join('%5s' % classes[predicted[j]] \
