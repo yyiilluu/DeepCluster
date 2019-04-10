@@ -1,5 +1,5 @@
 # speficy your job type, such as tensorflow and pytorch
-job_type: tensorflow
+container_image: deepcluster/tensorflow:1.12-python3.6
 
 # provide known dataset name or local datasets
 dataset_name: mnist
@@ -7,6 +7,11 @@ dataset_path:
 
 # number of GPU used to train, default it 1
 worker_required: 1
+
+# command to run
+# use the enviornment variable $DATASET to access dataset
+# and write output to $OUTPUT
+command: python main.py --dataset_path $DATASET --output_path $OUTPUT
 
 # you can also define your config here
 # config.yaml will be placed next to main.py
