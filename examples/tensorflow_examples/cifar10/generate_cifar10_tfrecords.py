@@ -33,17 +33,7 @@ from six.moves import xrange  # pylint: disable=redefined-builtin
 import tensorflow as tf
 
 CIFAR_FILENAME = 'cifar-10-python.tar.gz'
-CIFAR_DOWNLOAD_URL = 'https://www.cs.toronto.edu/~kriz/' + CIFAR_FILENAME
 CIFAR_LOCAL_FOLDER = 'cifar-10-batches-py'
-
-
-def download_and_extract(dataset_dir):
-  # download CIFAR-10 if not already downloaded.
-  tf.contrib.learn.datasets.base.maybe_download(CIFAR_FILENAME, dataset_dir,
-                                                CIFAR_DOWNLOAD_URL)
-  tarfile.open(os.path.join(dataset_dir, CIFAR_FILENAME),
-               'r:gz').extractall('./')
-
 
 def _int64_feature(value):
   return tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
@@ -90,8 +80,6 @@ def convert_to_tfrecord(input_files, output_file):
 
 
 def main(dataset_dir):
-  print('Download from {} and extract.'.format(CIFAR_DOWNLOAD_URL))
-  download_and_extract(dataset_dir)
   file_names = _get_file_names()
   input_dir = os.path.join(dataset_dir, CIFAR_LOCAL_FOLDER)
   for mode, files in file_names.items():
