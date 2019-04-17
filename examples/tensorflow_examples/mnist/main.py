@@ -15,7 +15,7 @@ def main(dataset_path, output_path):
     with open("./config.yaml", "r") as f:
         config = yaml.load(f)
     # invoke your training function
-    train(dataset_path)
+    train("./")
 
 
 # to test your code locally, you can either run main.py directly
