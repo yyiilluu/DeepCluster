@@ -15,7 +15,8 @@ def main(dataset_path, output_path):
     with open("./config.yaml", "r") as f:
         config = yaml.load(f)
     # invoke your training function
-    generate_cifar10_tfrecords.main(dataset_path)
+    cifar10_path = os.path.join(dataset_path, config["dataset_name"])
+    generate_cifar10_tfrecords.main(cifar10_path)
     cifar10_main.main(job_dir=output_path, data_dir='./', **config)
 
 
