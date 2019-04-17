@@ -2,6 +2,7 @@ import yaml
 # import your packages
 import generate_cifar10_tfrecords
 import cifar10_main
+import os
 
 # do not rename the functions
 def main(dataset_path, output_path):
